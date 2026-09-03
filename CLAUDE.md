@@ -2,14 +2,14 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Repository overview
+## リポジトリ概要
 
-This is a small personal test/sandbox repository (`test`), not a buildable application. It has no package manager, build tool, linter, or test suite configured. Contents are unrelated, standalone artifacts:
+これは個人的なテスト・サンドボックス用の小さなリポジトリ（`test`）であり、ビルド可能なアプリケーションではありません。パッケージマネージャー、ビルドツール、リンター、テストスイートは設定されていません。中身は互いに無関係な単独の成果物です。
 
-- `index.html` — a static Bootstrap 4.5 HTML snippet (loads Bootstrap CSS/JS and jQuery/Popper from CDNs via `<link>`/`<script>` tags). It references `site.webmanifest` and `icon.png`, neither of which exists in the repo. There is no dev server or build step — open the file directly in a browser to view it.
-- `test.java` — a standalone `HelloWorld` class. Compile/run directly with `javac test.java && java HelloWorld` (no build tool, no package declaration).
-- `test_sorce/` — miscellaneous scratch content (e.g. `aaa.txt`, currently empty).
+- `index.html` — Bootstrap 4.5 を使った静的な HTML スニペット（CDN 経由で Bootstrap の CSS/JS と jQuery/Popper を `<link>`/`<script>` タグで読み込む）。`site.webmanifest` と `icon.png` を参照しているが、どちらもリポジトリ内には存在しない。開発サーバーやビルド手順はなく、ブラウザで直接開いて確認する。
+- `test.java` — 単独の `HelloWorld` クラス。ビルドツールやパッケージ宣言なしで `javac test.java && java HelloWorld` によりコンパイル・実行できる。
+- `test_sorce/` — 雑多な試し用の内容（例: 現在は空の `aaa.txt`）。
 
-## Working in this repo
+## このリポジトリでの作業
 
-Because there is no shared build/test tooling, treat each file as independent: verify changes by compiling/opening the specific file you touched (e.g. `javac`/`java` for the `.java` file, opening `index.html` in a browser) rather than assuming a repo-wide command exists.
+共通のビルド／テストツールが存在しないため、各ファイルは独立したものとして扱うこと。リポジトリ全体で使えるコマンドがあると想定せず、変更を加えたファイルごとに検証する（例: `.java` ファイルは `javac`/`java`、`index.html` はブラウザで直接開いて確認する）。
