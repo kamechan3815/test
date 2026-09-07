@@ -1,0 +1,1092 @@
+<title>引っ越しリスト</title>
+<meta name="description" content="夫婦ふたりで引っ越し準備を管理する共有チェックリスト。期限が近いタスクをひと目で確認できます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Karla:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root {
+    --paper: #eef2f1;
+    --surface: #ffffff;
+    --surface-2: #e1e9e7;
+    --ink: #16232a;
+    --ink-muted: #5e7076;
+    --line: #cbd8d5;
+    --accent: #c9860a;
+    --accent-strong: #a66c05;
+    --accent-ink: #4a3300;
+    --accent-soft: #f3e2bb;
+    --teal: #1e6e64;
+    --teal-soft: #d7ece8;
+    --danger: #c0392b;
+    --danger-soft: #f6dad6;
+    --warn: #c1662a;
+    --warn-soft: #f4ddc8;
+    --success: #2e7d4f;
+    --success-soft: #d9ecdf;
+    --husband: #2c4a6e;
+    --husband-soft: #dde6ee;
+    --wife: #8a3b5e;
+    --wife-soft: #f0dde6;
+    --cat-purchase: #6b4a7a;
+    --cat-movers: #1e6e64;
+    --cat-procedures: #2c4a6e;
+    --cat-packing: #c9860a;
+    --cat-newhome: #2e7d4f;
+    --cat-day: #c0392b;
+    --cat-after: #7a5a45;
+    --shadow: 0 1px 2px rgba(22,35,42,.06), 0 6px 20px -8px rgba(22,35,42,.18);
+    --radius: 10px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #10171b;
+      --surface: #16222a;
+      --surface-2: #1e2c33;
+      --ink: #e7eeec;
+      --ink-muted: #8fa3a8;
+      --line: #2b3b41;
+      --accent: #e6a93c;
+      --accent-strong: #f0b93e;
+      --accent-ink: #241900;
+      --accent-soft: #4a3a15;
+      --teal: #4fc3b4;
+      --teal-soft: #163531;
+      --danger: #e2685d;
+      --danger-soft: #402320;
+      --warn: #e4934f;
+      --warn-soft: #402c1c;
+      --success: #6fc98c;
+      --success-soft: #1c3527;
+      --husband: #7fa4cf;
+      --husband-soft: #1e2f42;
+      --wife: #d98bad;
+      --wife-soft: #3a2230;
+      --cat-purchase: #c99bd9;
+      --cat-movers: #4fc3b4;
+      --cat-procedures: #7fa4cf;
+      --cat-packing: #e6a93c;
+      --cat-newhome: #6fc98c;
+      --cat-day: #e2685d;
+      --cat-after: #b58f6f;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.5);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #10171b;
+    --surface: #16222a;
+    --surface-2: #1e2c33;
+    --ink: #e7eeec;
+    --ink-muted: #8fa3a8;
+    --line: #2b3b41;
+    --accent: #e6a93c;
+    --accent-strong: #f0b93e;
+    --accent-ink: #241900;
+    --accent-soft: #4a3a15;
+    --teal: #4fc3b4;
+    --teal-soft: #163531;
+    --danger: #e2685d;
+    --danger-soft: #402320;
+    --warn: #e4934f;
+    --warn-soft: #402c1c;
+    --success: #6fc98c;
+    --success-soft: #1c3527;
+    --husband: #7fa4cf;
+    --husband-soft: #1e2f42;
+    --wife: #d98bad;
+    --wife-soft: #3a2230;
+    --cat-purchase: #c99bd9;
+    --cat-movers: #4fc3b4;
+    --cat-procedures: #7fa4cf;
+    --cat-packing: #e6a93c;
+    --cat-newhome: #6fc98c;
+    --cat-day: #e2685d;
+    --cat-after: #b58f6f;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px -8px rgba(0,0,0,.5);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Karla', ui-sans-serif, system-ui, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, .display {
+    font-family: 'Oswald', ui-sans-serif, system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    text-wrap: balance;
+  }
+  .mono { font-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace; }
+  a { color: var(--teal); }
+  button { font-family: inherit; }
+  ::selection { background: var(--accent-soft); }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+  }
+
+  .app {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 16px 96px;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    position: relative;
+    margin: 16px 0 14px;
+    padding: 22px 20px;
+    border-radius: var(--radius);
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 22px 22px;
+    background-position: -1px -1px;
+    background-color: var(--surface);
+    overflow: hidden;
+  }
+  .hero::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--surface) 55%, transparent) 0%, var(--surface) 78%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between; }
+  .hero-title-row { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+  .hero h1 { font-size: clamp(24px, 4vw, 32px); margin: 0; font-weight: 700; }
+  .hero-tag {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px; letter-spacing: .08em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--ink-muted);
+    white-space: nowrap;
+  }
+  .hero-tag.shared { color: var(--teal); border-color: var(--teal); background: var(--teal-soft); }
+  .hero-tag.local { color: var(--warn); border-color: var(--warn); background: var(--warn-soft); }
+  .hero-sub { margin: 4px 0 0; color: var(--ink-muted); font-size: 14px; }
+
+  .hero-stats { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+
+  .ring {
+    --pct: 0;
+    width: 62px; height: 62px; border-radius: 50%;
+    background: conic-gradient(var(--accent) calc(var(--pct)*1%), var(--surface-2) 0);
+    display: grid; place-items: center;
+    flex: none;
+  }
+  .ring-hole {
+    width: 46px; height: 46px; border-radius: 50%;
+    background: var(--surface);
+    display: grid; place-items: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px; font-weight: 600;
+  }
+  .stat-block { text-align: left; }
+  .stat-block .num { font-family: 'IBM Plex Mono', monospace; font-size: 20px; font-weight: 600; line-height: 1; }
+  .stat-block .lbl { font-size: 11px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .06em; margin-top: 4px; }
+
+  .movedate-form { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .movedate-form label { font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; }
+  .movedate-form input[type=date] {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 16px;
+    padding: 6px 8px;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    background: var(--surface-2);
+    color: var(--ink);
+  }
+  .btn-bell {
+    border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+    border-radius: 999px; padding: 7px 12px; font-size: 12px; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn-bell[data-on="true"] { border-color: var(--accent); color: var(--accent-strong); background: var(--accent-soft); }
+  .btn-bell svg { width: 14px; height: 14px; }
+
+  /* ---------- Reminder strip ---------- */
+  .reminders { margin: 0 0 16px; }
+  .reminders h2 {
+    font-size: 13px; margin: 0 0 8px 2px; color: var(--ink-muted);
+    font-weight: 600; letter-spacing: .06em;
+  }
+  .reminder-row { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; scrollbar-width: thin; }
+  .reminder-chip {
+    flex: none; display: flex; align-items: center; gap: 8px;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 999px;
+    padding: 7px 12px 7px 8px; box-shadow: var(--shadow); cursor: pointer;
+    max-width: 260px;
+  }
+  .reminder-chip .dot { width: 8px; height: 8px; border-radius: 50%; flex: none; }
+  .reminder-chip .title { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
+  .reminder-chip .due { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; padding: 2px 6px; border-radius: 5px; flex: none; }
+  .reminder-empty { font-size: 13px; color: var(--ink-muted); padding: 10px 2px; }
+
+  /* ---------- Layout ---------- */
+  .layout { display: flex; gap: 20px; align-items: flex-start; }
+  .filters {
+    flex: none; width: 190px;
+    position: sticky; top: 16px;
+    display: flex; flex-direction: column; gap: 18px;
+  }
+  .filter-group h3 { font-size: 12px; margin: 0 0 8px; color: var(--ink-muted); font-weight: 600; letter-spacing: .06em; }
+  .chip-list { display: flex; flex-direction: column; gap: 6px; }
+  .chip {
+    display: flex; align-items: center; justify-content: space-between; gap: 8px;
+    border: 1px solid var(--line); background: var(--surface); border-radius: 8px;
+    padding: 7px 10px; font-size: 13px; cursor: pointer; color: var(--ink);
+    text-align: left; width: 100%;
+  }
+  .chip.active { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
+  .chip .count { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-muted); }
+  .chip.active .count { color: inherit; opacity: .8; }
+  .toggle-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+  .toggle-row input { accent-color: var(--accent); width: 15px; height: 15px; }
+
+  .board { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 14px; }
+  .category {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  .category-head {
+    display: flex; align-items: center; gap: 10px; padding: 12px 14px;
+    cursor: pointer; user-select: none;
+    border-left: 4px solid var(--cat-color, var(--accent));
+  }
+  .category-head h3 { margin: 0; font-size: 15px; letter-spacing: .03em; flex: 1; }
+  .category-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-muted); }
+  .category-bar { width: 60px; height: 5px; border-radius: 3px; background: var(--surface-2); overflow: hidden; flex: none; }
+  .category-bar > span { display: block; height: 100%; background: var(--cat-color, var(--accent)); }
+  .category-chevron { width: 16px; height: 16px; color: var(--ink-muted); transition: transform .15s ease; flex: none; }
+  .category.collapsed .category-chevron { transform: rotate(-90deg); }
+  .category.collapsed .task-list { display: none; }
+
+  .task-list { display: flex; flex-direction: column; }
+  .task-row {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 10px 14px 10px 18px;
+    border-top: 1px solid var(--line);
+  }
+  .task-row.done { opacity: .58; }
+  .task-check {
+    width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid var(--line);
+    background: var(--surface); cursor: pointer; flex: none; margin-top: 1px;
+    display: grid; place-items: center; padding: 0;
+  }
+  .task-check svg { width: 12px; height: 12px; opacity: 0; }
+  .task-row.done .task-check { background: var(--success); border-color: var(--success); }
+  .task-row.done .task-check svg { opacity: 1; color: var(--surface); }
+  .task-main { flex: 1; min-width: 0; cursor: pointer; }
+  .task-title { font-size: 14.5px; font-weight: 500; }
+  .task-row.done .task-title { text-decoration: line-through; }
+  .task-notes { font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; }
+  .task-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .badge {
+    font-size: 11px; padding: 2px 7px; border-radius: 999px; font-weight: 600;
+    display: inline-flex; align-items: center; gap: 4px; white-space: nowrap;
+  }
+  .badge.assignee-both { background: var(--accent-soft); color: var(--accent-ink); }
+  .badge.assignee-husband { background: var(--husband-soft); color: var(--husband); }
+  .badge.assignee-wife { background: var(--wife-soft); color: var(--wife); }
+  .badge.due-overdue { background: var(--danger-soft); color: var(--danger); font-family: 'IBM Plex Mono', monospace; }
+  .badge.due-soon { background: var(--warn-soft); color: var(--warn); font-family: 'IBM Plex Mono', monospace; }
+  .badge.due-normal { background: var(--surface-2); color: var(--ink-muted); font-family: 'IBM Plex Mono', monospace; }
+  .task-edit {
+    border: none; background: transparent; color: var(--ink-muted); cursor: pointer;
+    padding: 4px; border-radius: 6px; flex: none;
+  }
+  .task-edit:hover { background: var(--surface-2); color: var(--ink); }
+  .task-edit svg { width: 16px; height: 16px; }
+
+  .empty-cat { padding: 16px 18px; font-size: 13px; color: var(--ink-muted); border-top: 1px solid var(--line); }
+
+  /* ---------- FAB ---------- */
+  .fab {
+    position: fixed; right: 20px; bottom: 20px; z-index: 20;
+    background: var(--accent); color: var(--accent-ink); border: none;
+    border-radius: 999px; padding: 13px 20px 13px 16px; font-size: 14px; font-weight: 700;
+    display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+    box-shadow: 0 8px 20px -6px rgba(0,0,0,.35);
+  }
+  .fab svg { width: 18px; height: 18px; }
+  .fab:hover { background: var(--accent-strong); }
+
+  /* ---------- Sheet ---------- */
+  .backdrop {
+    position: fixed; inset: 0; background: rgba(10, 16, 19, .48);
+    z-index: 30; opacity: 0; pointer-events: none; transition: opacity .18s ease;
+  }
+  .backdrop.open { opacity: 1; pointer-events: auto; }
+  .sheet {
+    position: fixed; z-index: 31;
+    right: 0; top: 0; bottom: 0; width: min(420px, 100%);
+    background: var(--surface); border-left: 1px solid var(--line);
+    transform: translateX(100%); transition: transform .2s ease;
+    display: flex; flex-direction: column;
+    box-shadow: -12px 0 30px -12px rgba(0,0,0,.3);
+  }
+  .sheet.open { transform: translateX(0); }
+  .sheet-head { display: flex; align-items: center; justify-content: space-between; padding: 16px 18px; border-bottom: 1px solid var(--line); }
+  .sheet-head h2 { margin: 0; font-size: 17px; }
+  .sheet-close { border: none; background: transparent; color: var(--ink-muted); cursor: pointer; padding: 4px; }
+  .sheet-close svg { width: 20px; height: 20px; }
+  .sheet-body { padding: 16px 18px; overflow-y: auto; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .field label { display: block; font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
+  .field input, .field select, .field textarea {
+    width: 100%; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
+    border-radius: 8px; padding: 9px 10px; font-size: 16px; font-family: inherit;
+  }
+  .field textarea { resize: vertical; min-height: 60px; }
+  .field-row { display: flex; gap: 10px; }
+  .field-row .field { flex: 1; }
+  .segmented { display: flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .segmented button {
+    flex: 1; border: none; background: var(--surface-2); color: var(--ink); padding: 9px 6px;
+    font-size: 13px; cursor: pointer; border-left: 1px solid var(--line);
+  }
+  .segmented button:first-child { border-left: none; }
+  .segmented button.active { background: var(--accent); color: var(--accent-ink); font-weight: 700; }
+  .sheet-foot { display: flex; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--line); }
+  .btn { border: none; border-radius: 8px; padding: 10px 16px; font-size: 14px; font-weight: 600; cursor: pointer; }
+  .btn-primary { background: var(--accent); color: var(--accent-ink); flex: 1; }
+  .btn-primary:hover { background: var(--accent-strong); }
+  .btn-ghost { background: var(--surface-2); color: var(--ink); }
+  .btn-danger-text { background: transparent; color: var(--danger); margin-right: auto; padding: 10px 4px; }
+
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); }
+
+  @media (max-width: 760px) {
+    .layout { flex-direction: column; }
+    .filters { width: 100%; position: static; flex-direction: row; flex-wrap: wrap; gap: 14px; }
+    .filter-group { flex: 1; min-width: 150px; }
+    .chip-list { flex-direction: row; flex-wrap: wrap; }
+    .chip { width: auto; }
+    .hero-inner { flex-direction: column; align-items: flex-start; }
+  }
+</style>
+
+<div class="app">
+  <header class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-title-row">
+          <h1>引っ越しリスト</h1>
+          <span class="hero-tag" id="modeTag">読み込み中</span>
+        </div>
+        <p class="hero-sub" id="daysLeft">引っ越し予定日を設定しましょう</p>
+        <div class="movedate-form">
+          <label for="moveDateInput">引っ越し予定日</label>
+          <input type="date" id="moveDateInput">
+        </div>
+      </div>
+      <div class="hero-stats">
+        <div class="ring" id="progressRing" style="--pct:0">
+          <div class="ring-hole"><span id="progressPct">0%</span></div>
+        </div>
+        <div class="stat-block">
+          <div class="num"><span id="doneCount">0</span> / <span id="totalCount">0</span></div>
+          <div class="lbl">完了タスク</div>
+        </div>
+        <button class="btn-bell" id="bellBtn" data-on="false" type="button">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+          <span id="bellLabel">通知オフ</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="reminders">
+    <h2>直近の期限</h2>
+    <div class="reminder-row" id="reminderRow"></div>
+  </section>
+
+  <div class="layout">
+    <aside class="filters">
+      <div class="filter-group">
+        <h3>担当</h3>
+        <div class="chip-list" id="assigneeFilter"></div>
+      </div>
+      <div class="filter-group">
+        <h3>表示</h3>
+        <label class="toggle-row"><input type="checkbox" id="hideDoneToggle"> 完了を隠す</label>
+      </div>
+    </aside>
+    <main class="board" id="board"></main>
+  </div>
+</div>
+
+<button class="fab" id="addTaskBtn" type="button">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M12 5v14M5 12h14"/></svg>
+  タスク追加
+</button>
+
+<div class="backdrop" id="backdrop"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+  <div class="sheet-head">
+    <h2 id="sheetTitle">タスクを追加</h2>
+    <button class="sheet-close" id="sheetClose" type="button" aria-label="閉じる">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="sheet-body">
+    <div class="field">
+      <label for="fTitle">タスク名</label>
+      <input type="text" id="fTitle" placeholder="例）電気の使用停止手続き" maxlength="80">
+    </div>
+    <div class="field">
+      <label>カテゴリ</label>
+      <div class="segmented" id="fCategory"></div>
+    </div>
+    <div class="field">
+      <label>担当</label>
+      <div class="segmented" id="fAssignee"></div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label for="fDueDate">期限日</label>
+        <input type="date" id="fDueDate">
+      </div>
+    </div>
+    <div class="field">
+      <label for="fNotes">メモ</label>
+      <textarea id="fNotes" placeholder="業者の電話番号、必要な持ち物など"></textarea>
+    </div>
+  </div>
+  <div class="sheet-foot">
+    <button class="btn btn-danger-text" id="deleteTaskBtn" type="button">削除</button>
+    <button class="btn btn-ghost" id="cancelTaskBtn" type="button">キャンセル</button>
+    <button class="btn btn-primary" id="saveTaskBtn" type="button">保存</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var CATEGORIES = [
+    { key: "purchase",   label: "物件購入・ローン", color: "var(--cat-purchase)" },
+    { key: "movers",     label: "業者手配",   color: "var(--cat-movers)" },
+    { key: "procedures", label: "各種手続き", color: "var(--cat-procedures)" },
+    { key: "packing",    label: "荷造り",     color: "var(--cat-packing)" },
+    { key: "newhome",    label: "新居準備",   color: "var(--cat-newhome)" },
+    { key: "day",        label: "引っ越し当日", color: "var(--cat-day)" },
+    { key: "after",      label: "引っ越し後", color: "var(--cat-after)" }
+  ];
+  var CATEGORY_MAP = {};
+  CATEGORIES.forEach(function (c) { CATEGORY_MAP[c.key] = c; });
+
+  var ASSIGNEES = [
+    { key: "both", label: "ふたり" },
+    { key: "husband", label: "夫" },
+    { key: "wife", label: "妻" }
+  ];
+  var ASSIGNEE_MAP = {};
+  ASSIGNEES.forEach(function (a) { ASSIGNEE_MAP[a.key] = a; });
+
+  var SEED_TASKS = [
+    { title: "引っ越し業者の見積もり依頼（3社以上）", category: "movers", assignee: "both", offsetDays: -60, notes: "" },
+    { title: "引っ越し業者を決定・契約", category: "movers", assignee: "husband", offsetDays: -45, notes: "" },
+    { title: "不用品・粗大ごみの処分手配", category: "movers", assignee: "wife", offsetDays: -30, notes: "自治体の粗大ごみ受付は事前予約制のことが多い" },
+    { title: "現住居の解約通知を提出", category: "procedures", assignee: "husband", offsetDays: -45, notes: "多くの賃貸は退去1ヶ月前までに通知が必要" },
+    { title: "インターネット回線の移転・新規契約", category: "procedures", assignee: "husband", offsetDays: -21, notes: "" },
+    { title: "電気・ガス・水道の停止/開始手続き", category: "procedures", assignee: "wife", offsetDays: -14, notes: "ガスは立ち会いが必要な場合あり" },
+    { title: "郵便物の転送届（e転居）", category: "procedures", assignee: "wife", offsetDays: -14, notes: "日本郵便のサイトから手続き可能" },
+    { title: "火災保険の住所変更・見直し", category: "procedures", assignee: "both", offsetDays: -14, notes: "" },
+    { title: "転出届の提出（現住所の役所）", category: "procedures", assignee: "husband", offsetDays: -14, notes: "" },
+    { title: "転入届の提出（新住所の役所）", category: "procedures", assignee: "husband", offsetDays: 3, notes: "転入から14日以内が期限" },
+    { title: "運転免許証の住所変更", category: "procedures", assignee: "wife", offsetDays: 7, notes: "" },
+    { title: "銀行・クレジットカードの住所変更", category: "procedures", assignee: "both", offsetDays: 7, notes: "" },
+    { title: "ダンボール・梱包資材を用意", category: "packing", assignee: "both", offsetDays: -21, notes: "" },
+    { title: "普段使わない物から梱包開始", category: "packing", assignee: "both", offsetDays: -14, notes: "季節外の衣類、来客用食器など" },
+    { title: "クローゼット・衣類の梱包", category: "packing", assignee: "wife", offsetDays: -7, notes: "" },
+    { title: "キッチン用品の梱包", category: "packing", assignee: "husband", offsetDays: -5, notes: "直前1週間分の食器・調理器具は残す" },
+    { title: "貴重品・重要書類をまとめておく", category: "packing", assignee: "both", offsetDays: -3, notes: "通帳、印鑑、パスポート、契約書類など" },
+    { title: "新居の採寸・レイアウト確認", category: "newhome", assignee: "both", offsetDays: -30, notes: "家具の配置と搬入経路をチェック" },
+    { title: "カーテン・照明器具の準備", category: "newhome", assignee: "husband", offsetDays: -7, notes: "" },
+    { title: "新居の掃除・害虫対策", category: "newhome", assignee: "wife", offsetDays: -3, notes: "" },
+    { title: "荷物の搬出立会い", category: "day", assignee: "both", offsetDays: 0, notes: "" },
+    { title: "旧居の清掃・鍵の返却", category: "day", assignee: "husband", offsetDays: 0, notes: "" },
+    { title: "新居への荷物搬入・配置指示", category: "day", assignee: "both", offsetDays: 0, notes: "" },
+    { title: "ダンボールの開封・片付け", category: "after", assignee: "both", offsetDays: 3, notes: "" },
+    { title: "ご近所への挨拶", category: "after", assignee: "both", offsetDays: 3, notes: "" },
+    { title: "各種住所変更の最終確認", category: "after", assignee: "both", offsetDays: 14, notes: "手続き漏れがないか一覧を見直す" }
+  ];
+
+  // ---------- date helpers ----------
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function fmt(dt) { return dt.getFullYear() + "-" + pad(dt.getMonth() + 1) + "-" + pad(dt.getDate()); }
+  function todayStr() { return fmt(new Date()); }
+  function parseLocal(dateStr) {
+    var p = dateStr.split("-").map(Number);
+    return new Date(p[0], p[1] - 1, p[2]);
+  }
+  function addDays(dateStr, n) {
+    var dt = parseLocal(dateStr);
+    dt.setDate(dt.getDate() + n);
+    return fmt(dt);
+  }
+  function diffFromToday(dateStr) {
+    var dt = parseLocal(dateStr);
+    var t = new Date();
+    var today = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+    return Math.round((dt - today) / 86400000);
+  }
+  function relativeLabel(dateStr) {
+    var d = diffFromToday(dateStr);
+    if (d < 0) return "期限切れ " + Math.abs(d) + "日";
+    if (d === 0) return "今日";
+    if (d === 1) return "明日";
+    if (d <= 7) return d + "日後";
+    var dt = parseLocal(dateStr);
+    return (dt.getMonth() + 1) + "/" + dt.getDate();
+  }
+  function dueStatusClass(dateStr, done) {
+    if (done) return "due-normal";
+    var d = diffFromToday(dateStr);
+    if (d < 0) return "due-overdue";
+    if (d <= 3) return "due-soon";
+    return "due-normal";
+  }
+
+  function uid() {
+    return "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+
+  // ---------- store: shared (Firebase Firestore) ----------
+  // `api` is handed in by the companion <script type="module"> block once
+  // the Firebase SDK has loaded — see the bottom of this file.
+  function createFirebaseStore(api) {
+    var listeners = [];
+    var settingsListeners = [];
+
+    api.onSnapshot(api.collection(api.db, "tasks"), function (snap) {
+      var tasks = snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
+      listeners.forEach(function (cb) { cb(tasks); });
+    }, function (err) { console.error("tasks subscription error", err); });
+
+    api.onSnapshot(api.doc(api.db, "meta", "settings"), function (snap) {
+      var s = snap.exists() ? snap.data() : { moveDate: null };
+      settingsListeners.forEach(function (cb) { cb(s); });
+    }, function (err) { console.error("settings subscription error", err); });
+
+    return {
+      mode: "shared",
+      onTasks: function (cb) { listeners.push(cb); },
+      addTask: function (data) { return api.addDoc(api.collection(api.db, "tasks"), data); },
+      updateTask: function (id, data) { return api.updateDoc(api.doc(api.db, "tasks", id), data); },
+      deleteTask: function (id) { return api.deleteDoc(api.doc(api.db, "tasks", id)); },
+      onSettings: function (cb) { settingsListeners.push(cb); },
+      setSettings: function (data) { return api.setDoc(api.doc(api.db, "meta", "settings"), data, { merge: true }); },
+      ensureSeed: function () {
+        var seededRef = api.doc(api.db, "meta", "seeded");
+        // Claim the seed via a transaction so two simultaneous first-time
+        // viewers can't both add the starter tasks.
+        return api.runTransaction(api.db, function (tx) {
+          return tx.get(seededRef).then(function (snap) {
+            if (snap.exists() && snap.data().done) return false;
+            tx.set(seededRef, { done: true, at: new Date().toISOString() });
+            return true;
+          });
+        }).then(function (shouldSeed) {
+          if (!shouldSeed) return;
+          var chain = Promise.resolve();
+          SEED_TASKS.forEach(function (t) {
+            chain = chain.then(function () {
+              return api.addDoc(api.collection(api.db, "tasks"), Object.assign({ done: false, dueDate: null, createdAt: new Date().toISOString() }, t));
+            });
+          });
+          return chain;
+        });
+      }
+    };
+  }
+
+  // ---------- store: local fallback (localStorage) ----------
+  function createLocalStore() {
+    var TASKS_KEY = "movingApp.tasks";
+    var SETTINGS_KEY = "movingApp.settings";
+    var listeners = [];
+    var settingsListeners = [];
+
+    function readTasks() {
+      try { return JSON.parse(localStorage.getItem(TASKS_KEY) || "[]"); } catch (e) { return []; }
+    }
+    function writeTasks(tasks) {
+      try { localStorage.setItem(TASKS_KEY, JSON.stringify(tasks)); } catch (e) {}
+      listeners.forEach(function (cb) { cb(tasks); });
+    }
+    function readSettings() {
+      try { return JSON.parse(localStorage.getItem(SETTINGS_KEY) || "null") || { moveDate: null }; } catch (e) { return { moveDate: null }; }
+    }
+    function writeSettings(s) {
+      try { localStorage.setItem(SETTINGS_KEY, JSON.stringify(s)); } catch (e) {}
+      settingsListeners.forEach(function (cb) { cb(s); });
+    }
+
+    return {
+      mode: "local",
+      onTasks: function (cb) { listeners.push(cb); cb(readTasks()); },
+      addTask: function (data) {
+        var tasks = readTasks();
+        var task = Object.assign({ id: uid() }, data);
+        tasks.push(task);
+        writeTasks(tasks);
+        return Promise.resolve(task);
+      },
+      updateTask: function (id, data) {
+        var tasks = readTasks();
+        var idx = tasks.findIndex(function (t) { return t.id === id; });
+        if (idx >= 0) tasks[idx] = Object.assign({}, tasks[idx], data);
+        writeTasks(tasks);
+        return Promise.resolve();
+      },
+      deleteTask: function (id) {
+        writeTasks(readTasks().filter(function (t) { return t.id !== id; }));
+        return Promise.resolve();
+      },
+      onSettings: function (cb) { settingsListeners.push(cb); cb(readSettings()); },
+      setSettings: function (s) { writeSettings(Object.assign({}, readSettings(), s)); return Promise.resolve(); },
+      ensureSeed: function () {
+        if (localStorage.getItem("movingApp.seeded")) return Promise.resolve();
+        var tasks = readTasks();
+        if (tasks.length === 0) {
+          tasks = SEED_TASKS.map(function (t) {
+            return Object.assign({ id: uid(), done: false, dueDate: null, createdAt: new Date().toISOString() }, t);
+          });
+          writeTasks(tasks);
+        }
+        try { localStorage.setItem("movingApp.seeded", "1"); } catch (e) {}
+        return Promise.resolve();
+      }
+    };
+  }
+
+  // ---------- app state ----------
+  var store = null;
+  var allTasks = [];
+  var settings = { moveDate: null };
+  var assigneeFilter = "all";
+  var hideDone = false;
+  var editingTaskId = null;
+  var notifyEnabled = false;
+
+  var els = {
+    modeTag: document.getElementById("modeTag"),
+    daysLeft: document.getElementById("daysLeft"),
+    moveDateInput: document.getElementById("moveDateInput"),
+    ring: document.getElementById("progressRing"),
+    progressPct: document.getElementById("progressPct"),
+    doneCount: document.getElementById("doneCount"),
+    totalCount: document.getElementById("totalCount"),
+    bellBtn: document.getElementById("bellBtn"),
+    bellLabel: document.getElementById("bellLabel"),
+    reminderRow: document.getElementById("reminderRow"),
+    assigneeFilter: document.getElementById("assigneeFilter"),
+    hideDoneToggle: document.getElementById("hideDoneToggle"),
+    board: document.getElementById("board"),
+    addTaskBtn: document.getElementById("addTaskBtn"),
+    backdrop: document.getElementById("backdrop"),
+    sheet: document.getElementById("sheet"),
+    sheetTitle: document.getElementById("sheetTitle"),
+    sheetClose: document.getElementById("sheetClose"),
+    fTitle: document.getElementById("fTitle"),
+    fCategory: document.getElementById("fCategory"),
+    fAssignee: document.getElementById("fAssignee"),
+    fDueDate: document.getElementById("fDueDate"),
+    fNotes: document.getElementById("fNotes"),
+    saveTaskBtn: document.getElementById("saveTaskBtn"),
+    cancelTaskBtn: document.getElementById("cancelTaskBtn"),
+    deleteTaskBtn: document.getElementById("deleteTaskBtn")
+  };
+
+  // ---------- render: assignee filter chips ----------
+  function renderAssigneeFilter() {
+    var counts = { all: allTasks.length };
+    ASSIGNEES.forEach(function (a) { counts[a.key] = allTasks.filter(function (t) { return t.assignee === a.key; }).length; });
+    var items = [{ key: "all", label: "すべて" }].concat(ASSIGNEES);
+    els.assigneeFilter.innerHTML = items.map(function (a) {
+      var active = assigneeFilter === a.key;
+      return '<button type="button" class="chip' + (active ? " active" : "") + '" data-assignee="' + a.key + '">' +
+        '<span>' + a.label + "</span><span class=\"count\">" + (counts[a.key] || 0) + "</span></button>";
+    }).join("");
+    Array.prototype.forEach.call(els.assigneeFilter.querySelectorAll("[data-assignee]"), function (btn) {
+      btn.addEventListener("click", function () {
+        assigneeFilter = btn.getAttribute("data-assignee");
+        renderAll();
+      });
+    });
+  }
+
+  // ---------- render: hero / progress ----------
+  function renderHero() {
+    var total = allTasks.length;
+    var done = allTasks.filter(function (t) { return t.done; }).length;
+    var pct = total ? Math.round((done / total) * 100) : 0;
+    els.ring.style.setProperty("--pct", pct);
+    els.progressPct.textContent = pct + "%";
+    els.doneCount.textContent = done;
+    els.totalCount.textContent = total;
+
+    els.modeTag.textContent = store && store.mode === "shared" ? "妻と共有中" : "この端末のみ";
+    els.modeTag.className = "hero-tag " + (store && store.mode === "shared" ? "shared" : "local");
+
+    if (settings.moveDate) {
+      els.moveDateInput.value = settings.moveDate;
+      var d = diffFromToday(settings.moveDate);
+      if (d > 0) els.daysLeft.textContent = "引っ越しまで あと " + d + " 日";
+      else if (d === 0) els.daysLeft.textContent = "本日が引っ越し予定日です";
+      else els.daysLeft.textContent = "引っ越し予定日から " + Math.abs(d) + " 日経過";
+    } else {
+      els.moveDateInput.value = "";
+      els.daysLeft.textContent = "引っ越し予定日を設定すると、期限日を自動計算します";
+    }
+  }
+
+  // ---------- render: reminder strip ----------
+  function renderReminders() {
+    var upcoming = allTasks
+      .filter(function (t) { return !t.done && t.dueDate; })
+      .filter(function (t) { return diffFromToday(t.dueDate) <= 3; })
+      .sort(function (a, b) { return diffFromToday(a.dueDate) - diffFromToday(b.dueDate); })
+      .slice(0, 8);
+
+    if (upcoming.length === 0) {
+      els.reminderRow.innerHTML = '<div class="reminder-empty">直近3日以内に期限のタスクはありません。</div>';
+      return;
+    }
+    els.reminderRow.innerHTML = upcoming.map(function (t) {
+      var cat = CATEGORY_MAP[t.category] || CATEGORIES[0];
+      var cls = dueStatusClass(t.dueDate, t.done);
+      return '<button type="button" class="reminder-chip" data-open="' + t.id + '">' +
+        '<span class="dot" style="background:' + cat.color + '"></span>' +
+        '<span class="title">' + escapeHtml(t.title) + '</span>' +
+        '<span class="due badge ' + cls + '">' + relativeLabel(t.dueDate) + '</span>' +
+        '</button>';
+    }).join("");
+    Array.prototype.forEach.call(els.reminderRow.querySelectorAll("[data-open]"), function (btn) {
+      btn.addEventListener("click", function () { openSheetForEdit(btn.getAttribute("data-open")); });
+    });
+  }
+
+  // ---------- render: board ----------
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function taskRowHtml(t) {
+    var a = ASSIGNEE_MAP[t.assignee] || ASSIGNEES[0];
+    var dueBadge = t.dueDate
+      ? '<span class="badge ' + dueStatusClass(t.dueDate, t.done) + '">' + relativeLabel(t.dueDate) + "</span>"
+      : '<span class="badge due-normal">期限なし</span>';
+    return '<div class="task-row' + (t.done ? " done" : "") + '" data-id="' + t.id + '">' +
+      '<button type="button" class="task-check" data-check="' + t.id + '" aria-label="完了にする">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12l5 5L20 7"/></svg>' +
+      "</button>" +
+      '<div class="task-main" data-open="' + t.id + '">' +
+      '<div class="task-title">' + escapeHtml(t.title) + "</div>" +
+      (t.notes ? '<div class="task-notes">' + escapeHtml(t.notes) + "</div>" : "") +
+      '<div class="task-meta">' +
+      '<span class="badge assignee-' + a.key + '">' + a.label + "</span>" +
+      dueBadge +
+      "</div></div>" +
+      '<button type="button" class="task-edit" data-open="' + t.id + '" aria-label="編集">' +
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z"/></svg>' +
+      "</button></div>";
+  }
+
+  function renderBoard() {
+    var scoped = allTasks.filter(function (t) { return assigneeFilter === "all" || t.assignee === assigneeFilter; });
+
+    els.board.innerHTML = CATEGORIES.map(function (cat) {
+      var catTasks = scoped.filter(function (t) { return t.category === cat.key; });
+      var visible = hideDone ? catTasks.filter(function (t) { return !t.done; }) : catTasks;
+      visible = visible.slice().sort(function (a, b) {
+        if (a.done !== b.done) return a.done ? 1 : -1;
+        if (a.dueDate && b.dueDate) return diffFromToday(a.dueDate) - diffFromToday(b.dueDate);
+        if (a.dueDate) return -1;
+        if (b.dueDate) return 1;
+        return 0;
+      });
+      var done = catTasks.filter(function (t) { return t.done; }).length;
+      var total = catTasks.length;
+      var pct = total ? Math.round((done / total) * 100) : 0;
+      var body = visible.length
+        ? visible.map(taskRowHtml).join("")
+        : '<div class="empty-cat">' + (total ? "表示するタスクはありません" : "タスクはまだありません") + "</div>";
+      return '<section class="category" style="--cat-color:' + cat.color + '" data-cat="' + cat.key + '">' +
+        '<div class="category-head" data-toggle="' + cat.key + '">' +
+        '<svg class="category-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>' +
+        "<h3>" + cat.label + "</h3>" +
+        '<span class="category-bar"><span style="width:' + pct + '%"></span></span>' +
+        '<span class="category-count">' + done + " / " + total + "</span>" +
+        "</div>" +
+        '<div class="task-list">' + body + "</div>" +
+        "</section>";
+    }).join("");
+
+    Array.prototype.forEach.call(els.board.querySelectorAll("[data-toggle]"), function (head) {
+      head.addEventListener("click", function () {
+        head.closest(".category").classList.toggle("collapsed");
+      });
+    });
+    Array.prototype.forEach.call(els.board.querySelectorAll("[data-check]"), function (btn) {
+      btn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        var id = btn.getAttribute("data-check");
+        var t = allTasks.find(function (x) { return x.id === id; });
+        if (t) store.updateTask(id, { done: !t.done });
+      });
+    });
+    Array.prototype.forEach.call(els.board.querySelectorAll("[data-open]"), function (el) {
+      el.addEventListener("click", function (e) {
+        e.stopPropagation();
+        openSheetForEdit(el.getAttribute("data-open"));
+      });
+    });
+  }
+
+  function renderAll() {
+    renderHero();
+    renderAssigneeFilter();
+    renderReminders();
+    renderBoard();
+    maybeNotify();
+  }
+
+  // ---------- sheet (add/edit form) ----------
+  function buildSegmented(container, items, selectedKey, onSelect) {
+    container.innerHTML = items.map(function (it) {
+      return '<button type="button" data-key="' + it.key + '" class="' + (it.key === selectedKey ? "active" : "") + '">' + it.label + "</button>";
+    }).join("");
+    Array.prototype.forEach.call(container.querySelectorAll("button"), function (btn) {
+      btn.addEventListener("click", function () {
+        Array.prototype.forEach.call(container.querySelectorAll("button"), function (b) { b.classList.remove("active"); });
+        btn.classList.add("active");
+        onSelect(btn.getAttribute("data-key"));
+      });
+    });
+  }
+
+  var formState = { category: "movers", assignee: "both" };
+
+  function openSheet() {
+    els.backdrop.classList.add("open");
+    els.sheet.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeSheet() {
+    els.backdrop.classList.remove("open");
+    els.sheet.classList.remove("open");
+    document.body.style.overflow = "";
+    editingTaskId = null;
+  }
+
+  function openSheetForAdd() {
+    editingTaskId = null;
+    els.sheetTitle.textContent = "タスクを追加";
+    els.deleteTaskBtn.style.display = "none";
+    els.fTitle.value = "";
+    els.fDueDate.value = "";
+    els.fNotes.value = "";
+    formState = { category: "movers", assignee: "both" };
+    buildSegmented(els.fCategory, CATEGORIES, formState.category, function (k) { formState.category = k; });
+    buildSegmented(els.fAssignee, ASSIGNEES, formState.assignee, function (k) { formState.assignee = k; });
+    openSheet();
+    els.fTitle.focus();
+  }
+
+  function openSheetForEdit(id) {
+    var t = allTasks.find(function (x) { return x.id === id; });
+    if (!t) return;
+    editingTaskId = id;
+    els.sheetTitle.textContent = "タスクを編集";
+    els.deleteTaskBtn.style.display = "";
+    els.fTitle.value = t.title || "";
+    els.fDueDate.value = t.dueDate || "";
+    els.fNotes.value = t.notes || "";
+    formState = { category: t.category || "movers", assignee: t.assignee || "both" };
+    buildSegmented(els.fCategory, CATEGORIES, formState.category, function (k) { formState.category = k; });
+    buildSegmented(els.fAssignee, ASSIGNEES, formState.assignee, function (k) { formState.assignee = k; });
+    openSheet();
+  }
+
+  els.addTaskBtn.addEventListener("click", openSheetForAdd);
+  els.sheetClose.addEventListener("click", closeSheet);
+  els.cancelTaskBtn.addEventListener("click", closeSheet);
+  els.backdrop.addEventListener("click", closeSheet);
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && els.sheet.classList.contains("open")) closeSheet();
+  });
+
+  els.saveTaskBtn.addEventListener("click", function () {
+    var title = els.fTitle.value.trim();
+    if (!title) { els.fTitle.focus(); return; }
+    var data = {
+      title: title,
+      category: formState.category,
+      assignee: formState.assignee,
+      dueDate: els.fDueDate.value || null,
+      notes: els.fNotes.value.trim()
+    };
+    if (editingTaskId) {
+      store.updateTask(editingTaskId, data);
+    } else {
+      data.done = false;
+      data.offsetDays = null;
+      data.createdAt = new Date().toISOString();
+      store.addTask(data);
+    }
+    closeSheet();
+  });
+
+  els.deleteTaskBtn.addEventListener("click", function () {
+    if (editingTaskId) store.deleteTask(editingTaskId);
+    closeSheet();
+  });
+
+  els.hideDoneToggle.addEventListener("change", function () {
+    hideDone = els.hideDoneToggle.checked;
+    renderBoard();
+  });
+
+  // ---------- move date ----------
+  els.moveDateInput.addEventListener("change", function () {
+    var val = els.moveDateInput.value;
+    if (!val) return;
+    store.setSettings({ moveDate: val });
+    allTasks.forEach(function (t) {
+      if (!t.dueDate && typeof t.offsetDays === "number") {
+        store.updateTask(t.id, { dueDate: addDays(val, t.offsetDays) });
+      }
+    });
+  });
+
+  // ---------- notifications ----------
+  function updateBellUI() {
+    els.bellBtn.setAttribute("data-on", String(notifyEnabled));
+    els.bellLabel.textContent = notifyEnabled ? "通知オン" : "通知オフ";
+  }
+  function maybeNotify() {
+    if (!notifyEnabled) return;
+    if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+    var today = todayStr();
+    var last = null;
+    try { last = localStorage.getItem("movingApp.lastNotified"); } catch (e) {}
+    if (last === today) return;
+    var due = allTasks.filter(function (t) { return !t.done && t.dueDate && diffFromToday(t.dueDate) <= 0; });
+    if (due.length === 0) return;
+    try {
+      new Notification("引っ越しリスト", { body: due.length + "件のタスクが期限切れ、または今日が期限です。" });
+      localStorage.setItem("movingApp.lastNotified", today);
+    } catch (e) {}
+  }
+  els.bellBtn.addEventListener("click", function () {
+    if (typeof Notification === "undefined") {
+      els.bellLabel.textContent = "この環境では非対応";
+      return;
+    }
+    if (Notification.permission === "granted") {
+      notifyEnabled = !notifyEnabled;
+      try { localStorage.setItem("movingApp.notify", notifyEnabled ? "1" : "0"); } catch (e) {}
+      updateBellUI();
+      if (notifyEnabled) maybeNotify();
+      return;
+    }
+    Notification.requestPermission().then(function (perm) {
+      notifyEnabled = perm === "granted";
+      try { localStorage.setItem("movingApp.notify", notifyEnabled ? "1" : "0"); } catch (e) {}
+      updateBellUI();
+      if (notifyEnabled) maybeNotify();
+      else if (perm === "denied") els.bellLabel.textContent = "通知がブロックされています";
+    }).catch(function () {
+      els.bellLabel.textContent = "この環境では非対応";
+    });
+  });
+
+  // ---------- boot ----------
+  function boot(activeStore) {
+    store = activeStore;
+    // Wire up live rendering immediately — seeding is a one-time bootstrap
+    // side-effect and must never block the task list from showing up.
+    store.onTasks(function (tasks) {
+      allTasks = tasks;
+      renderAll();
+    });
+    store.onSettings(function (s) {
+      settings = s || { moveDate: null };
+      renderHero();
+    });
+    store.ensureSeed().catch(function () { /* seeding is best-effort; live data already renders */ });
+  }
+
+  // Firebase loads asynchronously via the ES module script below (it needs
+  // a real network fetch of the SDK). Give it a few seconds to report in
+  // through window.__movingAppFirebaseReady; if it never does (offline,
+  // blocked, or misconfigured), fall back to this device's local storage
+  // so the app still works instead of staying blank.
+  var storeChosen = false;
+  window.__movingAppFirebaseReady = function (api) {
+    if (storeChosen) return;
+    storeChosen = true;
+    boot(createFirebaseStore(api));
+  };
+  setTimeout(function () {
+    if (storeChosen) return;
+    storeChosen = true;
+    boot(createLocalStore());
+  }, 3500);
+
+  try {
+    if (typeof Notification !== "undefined" && Notification.permission === "granted" && localStorage.getItem("movingApp.notify") === "1") {
+      notifyEnabled = true;
+    }
+  } catch (e) {}
+  updateBellUI();
+})();
+</script>
+
+<script type="module">
+  // Loads Firebase and, once ready, hands the app (the classic script
+  // above) a small function table via window.__movingAppFirebaseReady.
+  // Kept as a separate module script so a blocked/slow network never
+  // stops the rest of the page from working — see the fallback timer
+  // in the main script.
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import {
+    getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc,
+    onSnapshot, runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyDvwJxqNILsf7wSIHf-EgaI9JyplfrVO9I",
+    authDomain: "moving-checklist-c389d.firebaseapp.com",
+    projectId: "moving-checklist-c389d",
+    storageBucket: "moving-checklist-c389d.firebasestorage.app",
+    messagingSenderId: "55816035608",
+    appId: "1:55816035608:web:e92b617ad1ef3b8de8126d"
+  };
+
+  try {
+    var firebaseApp = initializeApp(firebaseConfig);
+    var db = getFirestore(firebaseApp);
+    if (typeof window.__movingAppFirebaseReady === "function") {
+      window.__movingAppFirebaseReady({
+        db: db, collection: collection, doc: doc, addDoc: addDoc, setDoc: setDoc,
+        updateDoc: updateDoc, deleteDoc: deleteDoc, onSnapshot: onSnapshot,
+        runTransaction: runTransaction
+      });
+    }
+  } catch (e) {
+    console.error("Firebase init failed; the app will fall back to this device's local storage.", e);
+  }
+</script>
