@@ -577,15 +577,19 @@
       },
       setSettings: function (data) { return db.doc("meta/settings").set(data); },
       ensureSeed: function () {
-        return db.doc("meta/seeded").get().then(function (snap) {
-          if (snap.exists) return;
-          var chain = Promise.resolve();
-          SEED_TASKS.forEach(function (t) {
-            chain = chain.then(function () {
-              return db.collection("tasks").add(Object.assign({ done: false, dueDate: null, createdAt: new Date().toISOString() }, t));
+        var holder = uid();
+        return db.doc("meta/seeded").acquire({ holder: holder, ttlMs: 15000 }).then(function (lease) {
+          if (!lease.acquired) return; // another viewer is already seeding (or just finished)
+          return db.doc("meta/seeded").get().then(function (snap) {
+            if (snap.exists && snap.data().done) return; // seeding already completed before we got the lease
+            var chain = Promise.resolve();
+            SEED_TASKS.forEach(function (t) {
+              chain = chain.then(function () {
+                return db.collection("tasks").add(Object.assign({ done: false, dueDate: null, createdAt: new Date().toISOString() }, t));
+              });
             });
+            return chain.then(function () { return db.doc("meta/seeded").set({ done: true, at: new Date().toISOString() }); });
           });
-          return chain.then(function () { return db.doc("meta/seeded").set({ done: true, at: new Date().toISOString() }); });
         });
       }
     };
