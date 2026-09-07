@@ -560,40 +560,50 @@
     return "t" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
   }
 
-  // ---------- store: shared (db capability) ----------
-  function createDbStore(db) {
+  // ---------- store: shared (Firebase Firestore) ----------
+  // `api` is handed in by the companion <script type="module"> block once
+  // the Firebase SDK has loaded — see the bottom of this file.
+  function createFirebaseStore(api) {
     var listeners = [];
-    db.collection("tasks").onSnapshot(function (snap) {
+    var settingsListeners = [];
+
+    api.onSnapshot(api.collection(api.db, "tasks"), function (snap) {
       var tasks = snap.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
       listeners.forEach(function (cb) { cb(tasks); });
-    }, function () { /* handled via fallback rendering */ });
+    }, function (err) { console.error("tasks subscription error", err); });
+
+    api.onSnapshot(api.doc(api.db, "meta", "settings"), function (snap) {
+      var s = snap.exists() ? snap.data() : { moveDate: null };
+      settingsListeners.forEach(function (cb) { cb(s); });
+    }, function (err) { console.error("settings subscription error", err); });
 
     return {
       mode: "shared",
       onTasks: function (cb) { listeners.push(cb); },
-      addTask: function (data) { return db.collection("tasks").add(data); },
-      updateTask: function (id, data) { return db.doc("tasks/" + id).update(data); },
-      deleteTask: function (id) { return db.doc("tasks/" + id).delete(); },
-      onSettings: function (cb) {
-        db.doc("meta/settings").onSnapshot(function (snap) {
-          cb(snap.exists ? snap.data() : { moveDate: null });
-        }, function () { cb({ moveDate: null }); });
-      },
-      setSettings: function (data) { return db.doc("meta/settings").set(data); },
+      addTask: function (data) { return api.addDoc(api.collection(api.db, "tasks"), data); },
+      updateTask: function (id, data) { return api.updateDoc(api.doc(api.db, "tasks", id), data); },
+      deleteTask: function (id) { return api.deleteDoc(api.doc(api.db, "tasks", id)); },
+      onSettings: function (cb) { settingsListeners.push(cb); },
+      setSettings: function (data) { return api.setDoc(api.doc(api.db, "meta", "settings"), data, { merge: true }); },
       ensureSeed: function () {
-        var holder = uid();
-        return db.doc("meta/seeded").acquire({ holder: holder, ttlMs: 15000 }).then(function (lease) {
-          if (!lease.acquired) return; // another viewer is already seeding (or just finished)
-          return db.doc("meta/seeded").get().then(function (snap) {
-            if (snap.exists && snap.data().done) return; // seeding already completed before we got the lease
-            var chain = Promise.resolve();
-            SEED_TASKS.forEach(function (t) {
-              chain = chain.then(function () {
-                return db.collection("tasks").add(Object.assign({ done: false, dueDate: null, createdAt: new Date().toISOString() }, t));
-              });
-            });
-            return chain.then(function () { return db.doc("meta/seeded").set({ done: true, at: new Date().toISOString() }); });
+        var seededRef = api.doc(api.db, "meta", "seeded");
+        // Claim the seed via a transaction so two simultaneous first-time
+        // viewers can't both add the starter tasks.
+        return api.runTransaction(api.db, function (tx) {
+          return tx.get(seededRef).then(function (snap) {
+            if (snap.exists() && snap.data().done) return false;
+            tx.set(seededRef, { done: true, at: new Date().toISOString() });
+            return true;
           });
+        }).then(function (shouldSeed) {
+          if (!shouldSeed) return;
+          var chain = Promise.resolve();
+          SEED_TASKS.forEach(function (t) {
+            chain = chain.then(function () {
+              return api.addDoc(api.collection(api.db, "tasks"), Object.assign({ done: false, dueDate: null, createdAt: new Date().toISOString() }, t));
+            });
+          });
+          return chain;
         });
       }
     };
@@ -1019,19 +1029,22 @@
     store.ensureSeed().catch(function () { /* seeding is best-effort; live data already renders */ });
   }
 
-  try {
-    if (typeof window.claude !== "undefined" && window.claude && typeof window.claude.use === "function") {
-      window.claude.use("db").then(function (db) {
-        boot(db ? createDbStore(db) : createLocalStore());
-      }).catch(function () {
-        boot(createLocalStore());
-      });
-    } else {
-      boot(createLocalStore());
-    }
-  } catch (e) {
+  // Firebase loads asynchronously via the ES module script below (it needs
+  // a real network fetch of the SDK). Give it a few seconds to report in
+  // through window.__movingAppFirebaseReady; if it never does (offline,
+  // blocked, or misconfigured), fall back to this device's local storage
+  // so the app still works instead of staying blank.
+  var storeChosen = false;
+  window.__movingAppFirebaseReady = function (api) {
+    if (storeChosen) return;
+    storeChosen = true;
+    boot(createFirebaseStore(api));
+  };
+  setTimeout(function () {
+    if (storeChosen) return;
+    storeChosen = true;
     boot(createLocalStore());
-  }
+  }, 3500);
 
   try {
     if (typeof Notification !== "undefined" && Notification.permission === "granted" && localStorage.getItem("movingApp.notify") === "1") {
@@ -1040,4 +1053,40 @@
   } catch (e) {}
   updateBellUI();
 })();
+</script>
+
+<script type="module">
+  // Loads Firebase and, once ready, hands the app (the classic script
+  // above) a small function table via window.__movingAppFirebaseReady.
+  // Kept as a separate module script so a blocked/slow network never
+  // stops the rest of the page from working — see the fallback timer
+  // in the main script.
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+  import {
+    getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc,
+    onSnapshot, runTransaction
+  } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyDvwJxqNILsf7wSIHf-EgaI9JyplfrVO9I",
+    authDomain: "moving-checklist-c389d.firebaseapp.com",
+    projectId: "moving-checklist-c389d",
+    storageBucket: "moving-checklist-c389d.firebasestorage.app",
+    messagingSenderId: "55816035608",
+    appId: "1:55816035608:web:e92b617ad1ef3b8de8126d"
+  };
+
+  try {
+    var firebaseApp = initializeApp(firebaseConfig);
+    var db = getFirestore(firebaseApp);
+    if (typeof window.__movingAppFirebaseReady === "function") {
+      window.__movingAppFirebaseReady({
+        db: db, collection: collection, doc: doc, addDoc: addDoc, setDoc: setDoc,
+        updateDoc: updateDoc, deleteDoc: deleteDoc, onSnapshot: onSnapshot,
+        runTransaction: runTransaction
+      });
+    }
+  } catch (e) {
+    console.error("Firebase init failed; the app will fall back to this device's local storage.", e);
+  }
 </script>
