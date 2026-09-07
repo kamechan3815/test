@@ -194,7 +194,7 @@
   .movedate-form label { font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; }
   .movedate-form input[type=date] {
     font-family: 'IBM Plex Mono', monospace;
-    font-size: 14px;
+    font-size: 16px;
     padding: 6px 8px;
     border-radius: 6px;
     border: 1px solid var(--line);
@@ -339,7 +339,7 @@
   .field label { display: block; font-size: 12px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: .05em; margin-bottom: 5px; }
   .field input, .field select, .field textarea {
     width: 100%; border: 1px solid var(--line); background: var(--surface-2); color: var(--ink);
-    border-radius: 8px; padding: 9px 10px; font-size: 14px; font-family: inherit;
+    border-radius: 8px; padding: 9px 10px; font-size: 16px; font-family: inherit;
   }
   .field textarea { resize: vertical; min-height: 60px; }
   .field-row { display: flex; gap: 10px; }
@@ -1002,16 +1002,17 @@
   // ---------- boot ----------
   function boot(activeStore) {
     store = activeStore;
-    store.ensureSeed().then(function () {
-      store.onTasks(function (tasks) {
-        allTasks = tasks;
-        renderAll();
-      });
-      store.onSettings(function (s) {
-        settings = s || { moveDate: null };
-        renderHero();
-      });
+    // Wire up live rendering immediately — seeding is a one-time bootstrap
+    // side-effect and must never block the task list from showing up.
+    store.onTasks(function (tasks) {
+      allTasks = tasks;
+      renderAll();
     });
+    store.onSettings(function (s) {
+      settings = s || { moveDate: null };
+      renderHero();
+    });
+    store.ensureSeed().catch(function () { /* seeding is best-effort; live data already renders */ });
   }
 
   try {
